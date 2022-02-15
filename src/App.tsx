@@ -1,8 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { generatePath, Link, matchPath, Outlet, PathRouteProps, resolvePath, Route, Routes, useLocation, useMatch, useResolvedPath } from 'react-router-dom';
-
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import {
+  generatePath,
+  Link,
+  matchPath,
+  Outlet,
+  PathRouteProps,
+  resolvePath,
+  Route,
+  Routes,
+  useLocation,
+  useMatch,
+  useResolvedPath,
+} from "react-router-dom";
 
 type RoutePathDefinition = {
   title: string;
@@ -16,12 +27,22 @@ const routes: RoutePathDefinition[] = [
   {
     title: "Sub",
     path: "/sub",
-    element: (<><h1>sub</h1><Outlet /></>),
+    element: (
+      <>
+        <h1>sub</h1>
+        <Outlet />
+      </>
+    ),
     children: [
       {
         title: "Sub-Zero",
         path: "zero",
-        element: (<><h1>sub-zero</h1><Outlet /></>),
+        element: (
+          <>
+            <h1>sub-zero</h1>
+            <Outlet />
+          </>
+        ),
         children: [
           { title: "Sub-Zero-Oh", path: "oh", element: <h1>sub-zero-oh</h1> },
           { title: "Sub-Zero-Oh-Oh", path: "oh-oh", element: <h1>sub-zero-oh-oh</h1> },
@@ -33,7 +54,12 @@ const routes: RoutePathDefinition[] = [
   {
     title: "Sub2",
     path: "/sub2",
-    element: (<><h1>sub2</h1><Outlet /></>),
+    element: (
+      <>
+        <h1>sub2</h1>
+        <Outlet />
+      </>
+    ),
     children: [
       { title: "Sub2-Zero", path: "zero", element: <h1>sub2-zero</h1> },
       { title: "Sub2-One", path: "one", element: <h1>sub2-one</h1> },
@@ -42,17 +68,17 @@ const routes: RoutePathDefinition[] = [
 ];
 
 function mapDefinitionToRoutes(definitions: RoutePathDefinition[]): React.ReactNode {
-  return definitions.map(definition => {
+  return definitions.map((definition) => {
     const routeProps: PathRouteProps = {
       path: definition.path,
-      element: definition.element
+      element: definition.element,
     };
-    if(definition.children) {
+    if (definition.children) {
       routeProps.children = mapDefinitionToRoutes(definition.children);
     }
 
-    return (<Route key={routeProps.path} {...routeProps} />);
-  })
+    return <Route key={routeProps.path} {...routeProps} />;
+  });
 }
 function mapDefinitionToMenu(
   definitions: RoutePathDefinition[],
@@ -81,7 +107,6 @@ function mapDefinitionToActivePath(
   parentPath: string = "",
   params: any = {}
 ): RoutePathDefinition[] {
-
   const matched: RoutePathDefinition[] = [];
 
   definitions.forEach((definition, index) => {
@@ -89,21 +114,20 @@ function mapDefinitionToActivePath(
     const to = generatePath(definition.path, params);
     const resolvedPath = resolvePath(to, parentPath);
 
-    console.log('builtPath', builtPath);
-    console.log('to', to);
-    console.log('resolvedPath', resolvedPath);
+    console.log("builtPath", builtPath);
+    console.log("to", to);
+    console.log("resolvedPath", resolvedPath);
 
     let toPathname = resolvedPath.pathname;
     let isActive =
-    locationPathname === toPathname ||
-    ( locationPathname.startsWith(toPathname) &&
-      locationPathname.charAt(toPathname.length) === "/");
+      locationPathname === toPathname ||
+      (locationPathname.startsWith(toPathname) && locationPathname.charAt(toPathname.length) === "/");
 
     console.log(isActive);
 
-    if(isActive) {
+    if (isActive) {
       matched.push(definition);
-      if(definition.children){
+      if (definition.children) {
         matched.push(...mapDefinitionToActivePath(definition.children, locationPathname, builtPath));
       }
     }
@@ -112,7 +136,6 @@ function mapDefinitionToActivePath(
 }
 
 function concatPaths(parent: string, current: string) {
-
   // https://github.com/remix-run/react-router/blob/f16c5490dfa75f15dcfb86d2a981a7c58a9d1a33/packages/react-router/index.tsx#L1369
   //   const joinPaths = (paths: string[]): string =>
   //   paths.join("/").replace(/\/\/+/g, "/");
@@ -126,48 +149,43 @@ function concatPaths(parent: string, current: string) {
       ? parent.slice(0, parent.length - 2)
       : parent
     : parent;
-    const cleanedCurrent = current.startsWith("/") ? current : `/${current}`;
-    // console.log("parent", parent);
-    // console.log("cleaned parent", cleanedParent);
-    // console.log("cleaned current", cleanedCurrent);
+  const cleanedCurrent = current.startsWith("/") ? current : `/${current}`;
+  // console.log("parent", parent);
+  // console.log("cleaned parent", cleanedParent);
+  // console.log("cleaned current", cleanedCurrent);
   return `${cleanedParent}${cleanedCurrent}`;
 }
 
 function App() {
-
   const RoutesToRender = mapDefinitionToRoutes(routes);
   const LinksToRender = mapDefinitionToMenu(routes);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
+      <header className="App-header"></header>
       <main>
-        <div style={{outline: 'magenta 6px dashed'}}>
-          {LinksToRender}
-        </div>
-        <div style={{outline: 'cyan 6px dashed'}}>
+        <div style={{ outline: "magenta 6px dashed" }}>{LinksToRender}</div>
+        <div style={{ outline: "cyan 6px dashed" }}>
           <Breadcrumbs />
         </div>
-        <Routes>
-          {RoutesToRender}
-        </Routes>
+        <Routes>{RoutesToRender}</Routes>
       </main>
     </div>
   );
 }
 
-export function Breadcrumbs(){
-
+export function Breadcrumbs() {
   const location = useLocation();
   const activePathDefinitions = mapDefinitionToActivePath(routes, location.pathname);
-  return (<>{activePathDefinitions.map((def, index) => <div key={index}>{index === 0 ? '' : '> '}{def.title}</div>)}</>);
+  return (
+    <>
+      {activePathDefinitions.map((def, index) => (
+        <div key={index}>
+          {index === 0 ? "" : "> "}
+          {def.title}
+        </div>
+      ))}
+    </>
+  );
 }
 
 export default App;
