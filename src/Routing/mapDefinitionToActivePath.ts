@@ -11,12 +11,8 @@ export function mapDefinitionToActivePath(
 
   definitions.forEach((definition, index) => {
     const builtPath = concatPaths(parentPath, definition.path);
-    const to = generatePath(definition.path, params);
+    const to = generateToPath(definition, params);
     const resolvedPath = resolvePath(to, parentPath);
-
-    console.log("builtPath", builtPath);
-    console.log("to", to);
-    console.log("resolvedPath", resolvedPath);
 
     let toPathname = resolvedPath.pathname;
     let isActive = locationPathname === toPathname ||
@@ -33,3 +29,13 @@ export function mapDefinitionToActivePath(
   });
   return matched;
 }
+function generateToPath( definition: RoutePathDefinition, params: any) {
+  let to = '';
+  try {
+    to = generatePath(definition.path, params);
+  } catch (err) {
+    to = definition.path;
+  }
+  return to;
+}
+

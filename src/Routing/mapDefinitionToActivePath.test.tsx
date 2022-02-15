@@ -1,5 +1,5 @@
-import { mapDefinitionToActivePath } from './mapDefinitionToActivePath';
-import { RoutePathDefinition } from './RoutePathDefinition';
+import { mapDefinitionToActivePath } from "./mapDefinitionToActivePath";
+import { RoutePathDefinition } from "./RoutePathDefinition";
 
 const routes: RoutePathDefinition[] = [
   { title: "Home", path: "/", element: <h1>test</h1> },
@@ -12,25 +12,33 @@ const routes: RoutePathDefinition[] = [
       { title: "Sub-Two", path: "two", element: <h1>test</h1> },
     ],
   },
+  { title: "Params", path: "/params/:id", element: <h1>test</h1> },
 ];
-test('when mapping / route', () => {
-    const mappedActivePath = mapDefinitionToActivePath(routes,'/');
+test("when mapping / route", () => {
+  const mappedActivePath = mapDefinitionToActivePath(routes, "/");
 
-    expect(mappedActivePath.length).toEqual(1);
-    expect(mappedActivePath[0].path).toEqual('/');
+  expect(mappedActivePath.length).toEqual(1);
+  expect(mappedActivePath[0].path).toEqual("/");
 });
 
-test('when mapping /sub route', () => {
-    const mappedActivePath = mapDefinitionToActivePath(routes,'/sub');
+test("when mapping /sub route", () => {
+  const mappedActivePath = mapDefinitionToActivePath(routes, "/sub");
 
-    expect(mappedActivePath.length).toEqual(1);
-    expect(mappedActivePath[0].path).toEqual('/sub');
+  expect(mappedActivePath.length).toEqual(1);
+  expect(mappedActivePath[0].path).toEqual("/sub");
 });
 
-test('when mapping /sub/one route', () => {
-    const mappedActivePath = mapDefinitionToActivePath(routes,'/sub/one');
+test("when mapping /sub/one route", () => {
+  const mappedActivePath = mapDefinitionToActivePath(routes, "/sub/one");
 
-    expect(mappedActivePath.length).toEqual(2);
-    expect(mappedActivePath[0].path).toEqual('/sub');
-    expect(mappedActivePath[1].path).toEqual('one');
+  expect(mappedActivePath.length).toEqual(2);
+  expect(mappedActivePath[0].path).toEqual("/sub");
+  expect(mappedActivePath[1].path).toEqual("one");
+});
+
+test("when mapping /params/123 route", () => {
+  const mappedActivePath = mapDefinitionToActivePath(routes, "/params/1234", undefined, { id: 1234 });
+
+  expect(mappedActivePath.length).toEqual(1);
+  expect(mappedActivePath[0].path).toEqual("/params/:id");
 });
