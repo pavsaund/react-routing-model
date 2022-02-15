@@ -4,7 +4,7 @@ This repository is a playground / learning space for me to explore alternatives 
 It is built using create-react-app. Details on how to run it below.
 
 ToDo (in no particular order)
-- [ ] Proof of concept using a data model that supports children to render routes, navlinks and breadcrumbs
+- [x] Proof of concept using a data model that supports children to render routes, navlinks and breadcrumbs
 - [ ] Add support for route parameters
 - [ ] Explore more edge-cases (ex: index routes)
 - [ ] Add tests around the mapping and rendering
