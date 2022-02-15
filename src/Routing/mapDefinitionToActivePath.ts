@@ -1,13 +1,15 @@
 import { generatePath, resolvePath } from "react-router-dom";
-import { RoutePathDefinition } from './RoutePathDefinition';
+import { RoutePathDefinition } from "./RoutePathDefinition";
 import { concatPaths } from "./concatPaths";
+import { ActiveRoutePath } from "./ActiveRoutePath";
 
 export function mapDefinitionToActivePath(
   definitions: RoutePathDefinition[],
   locationPathname: string,
   parentPath: string = "",
-  params: any = {}): RoutePathDefinition[] {
-  const matched: RoutePathDefinition[] = [];
+  params: any = {}
+): ActiveRoutePath[] {
+  const matched: ActiveRoutePath[] = [];
 
   definitions.forEach((definition, index) => {
     const builtPath = concatPaths(parentPath, definition.path);
@@ -15,13 +17,17 @@ export function mapDefinitionToActivePath(
     const resolvedPath = resolvePath(to, parentPath);
 
     let toPathname = resolvedPath.pathname;
-    let isActive = locationPathname === toPathname ||
+    let isActive =
+      locationPathname === toPathname ||
       (locationPathname.startsWith(toPathname) && locationPathname.charAt(toPathname.length) === "/");
 
     console.log(isActive);
 
     if (isActive) {
-      matched.push(definition);
+      matched.push({
+        resolvedPath: resolvedPath.pathname,
+        definition: definition,
+      });
       if (definition.children) {
         matched.push(...mapDefinitionToActivePath(definition.children, locationPathname, builtPath));
       }
@@ -29,8 +35,8 @@ export function mapDefinitionToActivePath(
   });
   return matched;
 }
-function generateToPath( definition: RoutePathDefinition, params: any) {
-  let to = '';
+function generateToPath(definition: RoutePathDefinition, params: any) {
+  let to = "";
   try {
     to = generatePath(definition.path, params);
   } catch (err) {
@@ -38,4 +44,3 @@ function generateToPath( definition: RoutePathDefinition, params: any) {
   }
   return to;
 }
-

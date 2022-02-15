@@ -9,13 +9,13 @@ interface BreadcrumbsProps {
 
 export function Breadcrumbs({ routes }: BreadcrumbsProps) {
   const location = useLocation();
-  const activePathDefinitions = mapDefinitionToActivePath(routes, location.pathname);
+  const activeRoutePaths = mapDefinitionToActivePath(routes, location.pathname);
   return (
     <>
-      {activePathDefinitions.map((def, index) => (
+      {activeRoutePaths.map((active, index) => (
         <div key={index}>
           {index === 0 ? "" : "> "}
-          {def.title}
+          {active.definition.title}
         </div>
       ))}
     </>
