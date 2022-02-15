@@ -1,3 +1,16 @@
+# React Routing Model Playground
+
+This repository is a playground / learning space for me to explore alternatives around using a more programmatic approach to using the react router.
+It is built using create-react-app. Details on how to run it below.
+
+ToDo (in no particular order)
+- [ ] Proof of concept using a data model that supports children to render routes, navlinks and breadcrumbs
+- [ ] Add support for route parameters
+- [ ] Explore more edge-cases (ex: index routes)
+- [ ] Add tests around the mapping and rendering
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
