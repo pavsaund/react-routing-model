@@ -7,6 +7,9 @@ export function mapDefinitionToMenu(definitions: RoutePathDefinition[], parent: 
   return (
     <ul>
       {definitions.map((definition, index) => {
+        if(!definition.nav){
+          return undefined;
+        }
         const builtPath = concatPaths(parent, definition.path);
         let to: string | undefined;
         try {

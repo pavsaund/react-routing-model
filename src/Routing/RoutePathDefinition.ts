@@ -4,6 +4,7 @@ export type RoutePathDefinition = {
   path: string;
   element: JSX.Element;
   children?: RoutePathDefinition[];
+  nav?: boolean;
 };
 
 
