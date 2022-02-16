@@ -1,5 +1,5 @@
 import "./App.css";
-import { NavMenu } from "./Layout/NavMenu";
+import { NavMenu } from "./Layout/NavMenu/NavMenu";
 import { Breadcrumbs } from "./Layout/Breadcrumbs/Breadcrumbs";
 import { RoutesRenderer } from "./Routing/RoutesRenderer";
 import { routes } from "./routes";
@@ -12,7 +12,7 @@ function App() {
       </header>
       <main>
         <div style={{ outline: "magenta 6px dashed" }}>
-          {/* <NavMenu routes={routes} /> */}
+          <NavMenu routes={routes} />
         </div>
         <div style={{ outline: "cyan 6px dashed" }}>
           <Breadcrumbs routes={routes} />
