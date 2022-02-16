@@ -9,6 +9,8 @@ interface BreadcrumbsProps {
 
 export function Breadcrumbs({ routes }: BreadcrumbsProps) {
   const location = useLocation();
+  const params = useParams();
+  console.log('params', params);
   const activeRoutePaths = mapDefinitionToActivePath(routes, location.pathname);
 
   return (
