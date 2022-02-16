@@ -1,6 +1,5 @@
   import { ActiveRoutePath } from './ActiveRoutePath';
-import { concatPaths } from '../../Routing/concatPaths';
-import { matchPatternInPath, isPathActiveForLocation } from '../../Routing/routeHelpers';
+import { matchPatternInPath, isPathActiveForLocation, concatPaths } from '../../Routing/routeHelpers';
 import { RoutePathDefinition } from '../../Routing/RoutePathDefinition';
 
 export function mapDefinitionToActivePath(
