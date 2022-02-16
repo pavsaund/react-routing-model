@@ -1,5 +1,5 @@
 import { mapDefinitionToActivePath } from "./mapDefinitionToActivePath";
-import { RoutePathDefinition } from "./RoutePathDefinition";
+import { RoutePathDefinition } from "../../Routing/RoutePathDefinition";
 
 const routes: RoutePathDefinition[] = [
   { title: "Home", path: "/", element: <h1>test</h1> },

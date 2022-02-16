@@ -1,4 +1,4 @@
-import { RoutePathDefinition } from './RoutePathDefinition';
+import { RoutePathDefinition } from '../../Routing/RoutePathDefinition';
 
 export type ActiveRoutePath = {
   resolvedPath: string;

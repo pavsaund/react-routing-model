@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { mapDefinitionToActivePath } from "../Routing/mapDefinitionToActivePath";
-import { RoutePathDefinition } from "../Routing/RoutePathDefinition";
+import { RoutePathDefinition } from '../../Routing/RoutePathDefinition';
+import { mapDefinitionToActivePath } from './mapDefinitionToActivePath';
 
-interface BreadcrumbsProps {
+export interface BreadcrumbsProps {
   routes: RoutePathDefinition[];
 }
 
