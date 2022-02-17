@@ -1,5 +1,5 @@
 import { RoutePathDefinition } from "../../Routing/RoutePathDefinition";
-import { mapDefinitionToMenu } from "../mapDefinitionToMenu";
+import { mapDefinitionToMenu } from "./mapDefinitionToMenu";
 
 export interface NavMenuProps {
   routes: RoutePathDefinition[];

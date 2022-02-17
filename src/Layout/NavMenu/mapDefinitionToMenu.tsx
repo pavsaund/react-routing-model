@@ -1,7 +1,7 @@
 import React from "react";
 import { generatePath, Link } from "react-router-dom";
-import { concatPaths } from '../Routing/routeHelpers';
-import { RoutePathDefinition } from "../Routing/RoutePathDefinition";
+import { concatPaths } from '../../Routing/routeHelpers';
+import { RoutePathDefinition } from "../../Routing/RoutePathDefinition";
 
 export function mapDefinitionToMenu(definitions: RoutePathDefinition[], parent: string = ""): React.ReactNode {
   return (
