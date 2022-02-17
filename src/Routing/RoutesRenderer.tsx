@@ -9,7 +9,7 @@ function mapDefinitionToRoute(definition: RoutePathDefinition): JSX.Element {
     path: definition.path,
     element: definition.element,
   };
-  const nestedDefinitionRoutes = definition.children?.map((childDefinitionRoute) =>
+  const nestedDefinitionRoutes = definition.nestedRoutes?.map((childDefinitionRoute) =>
     mapDefinitionToRoute(childDefinitionRoute)
   );
 

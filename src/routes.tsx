@@ -8,13 +8,13 @@ export const routes: RoutePathDefinition[] = [
     path: "/sub",
     element: <Page title="sub" withOutlet />,
     nav: true,
-    children: [
+    nestedRoutes: [
       {
         title: "Sub-Zero",
         path: "zero",
         element: <Page title="sub-zero" withOutlet />,
         nav: true,
-        children: [
+        nestedRoutes: [
           { title: "Sub-Zero-Oh", path: "oh", element: <Page title={"sub-zero-oh"} /> },
           { title: "Sub-Zero-Oh-Oh", path: "oh-oh", element: <Page title="sub-zero-oh-oh" /> },
         ],
@@ -27,13 +27,13 @@ export const routes: RoutePathDefinition[] = [
     path: "/sub2",
     element: <Page title="sub2" withOutlet />,
     nav: true,
-    children: [
+    nestedRoutes: [
       { title: "Sub2-Zero", path: "zero", element: <Page title="sub2-zero" /> },
       { title: "Sub2-One", path: "one", element: <Page title="sub2-one" /> },
       { title: "Sub2-Param", path: "param/:id", element: <Page title="sub2-param" /> },
     ],
   },
-  { title: "Params with ID", path: "/params/:id", element: <Page title='params' withOutlet/>, children:[
+  { title: "Params with ID", path: "/params/:id", element: <Page title='params' withOutlet/>, nestedRoutes:[
     { title: "Params with ID-details", path: "details", element: <Page title="params-details" /> },
     { title: "Params with ID-extended", path: "extended", element: <Page title="params-extended" /> },
   ] },

@@ -27,9 +27,9 @@ export function mapDefinitionToActivePath(
         resolvedPath: toPathname,
         definition: definition,
       });
-      if (definition.children) {
+      if (definition.nestedRoutes) {
         activeRoutePaths.push(
-          ...mapDefinitionToActivePath(definition.children, locationPathname, pathPatternWithParent)
+          ...mapDefinitionToActivePath(definition.nestedRoutes, locationPathname, pathPatternWithParent)
         );
       }
     }

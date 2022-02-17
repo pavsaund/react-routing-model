@@ -20,7 +20,7 @@ export function mapDefinitionToMenu(definitions: RoutePathDefinition[], parent: 
             {to ? (
               <li key={definition.path} style={{ display: "inline-block", listStyleImage: "none", marginLeft: "2rem" }}>
                 <Link to={to}>{definition.title}</Link>
-                {definition.children ? mapDefinitionToMenu(definition.children, builtPath) : undefined}
+                {definition.nestedRoutes ? mapDefinitionToMenu(definition.nestedRoutes, builtPath) : undefined}
               </li>
             ) : undefined}
           </>

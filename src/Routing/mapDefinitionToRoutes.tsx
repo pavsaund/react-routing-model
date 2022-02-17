@@ -10,8 +10,8 @@ export function mapDefinitionToRoutes(definitions: RoutePathDefinition[]): JSX.E
           path: definition.path,
           element: definition.element,
         };
-        if (definition.children) {
-          routeProps.children = mapDefinitionToRoutes(definition.children);
+        if (definition.nestedRoutes) {
+          routeProps.children = mapDefinitionToRoutes(definition.nestedRoutes);
         }
 
         return <Route key={routeProps.path} {...routeProps} />;

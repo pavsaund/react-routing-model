@@ -7,7 +7,7 @@ const routes: RoutePathDefinition[] = [
     title: "Sub",
     path: "/sub",
     element: <h1>test</h1>,
-    children: [
+    nestedRoutes: [
       { title: "Sub-One", path: "one", element: <h1>test</h1> },
       { title: "Sub-Two", path: "two", element: <h1>test</h1> },
     ],
@@ -16,12 +16,12 @@ const routes: RoutePathDefinition[] = [
     title: "Params",
     path: "/params/:id",
     element: <h1>test</h1>,
-    children: [
+    nestedRoutes: [
       {
         title: "Params-Details",
         path: "details",
         element: <h1>test</h1>,
-        children: [
+        nestedRoutes: [
           { title: "Params-Details-Tab1", path: "tab1", element: <h1>test</h1> },
           { title: "Params-Details-Tab2", path: "tab2/:compareToId", element: <h1>test</h1> },
         ],
