@@ -16,7 +16,7 @@ export function Breadcrumbs({ routes }: BreadcrumbsProps) {
       {activeRoutePaths.map((active, index) => (
         <span key={index}>
           {index === 0 ? "" : " > "}
-          <Link to={active.resolvedPath}>{active.definition.title}</Link>
+          <Link to={active.resolvedPath}>{active.title}</Link>
         </span>
       ))}
     </>

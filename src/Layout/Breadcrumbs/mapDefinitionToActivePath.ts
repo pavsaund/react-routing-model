@@ -1,6 +1,6 @@
-  import { ActiveRoutePath } from './ActiveRoutePath';
-import { matchPatternInPath, isPathActiveForLocation, concatPaths } from '../../Routing/routeHelpers';
-import { RoutePathDefinition } from '../../Routing/RoutePathDefinition';
+import { ActiveRoutePath } from "./ActiveRoutePath";
+import { matchPatternInPath, isPathActiveForLocation, concatPaths } from "../../Routing/routeHelpers";
+import { RoutePathDefinition } from "../../Routing/RoutePathDefinition";
 
 export function mapDefinitionToActivePath(
   definitions: RoutePathDefinition[],
@@ -17,15 +17,15 @@ export function mapDefinitionToActivePath(
     if (!matchedPath) {
       return;
     }
-
     const toPathname = matchedPath.pathname;
 
-    const isActive = isPathActiveForLocation(toPathname,locationPathname);
+    const isActive = isPathActiveForLocation(toPathname, locationPathname);
 
     if (isActive) {
       activeRoutePaths.push({
         resolvedPath: toPathname,
         definition: definition,
+        title: definition.titleResolver?.(definition, matchedPath?.params || {}) || definition.title,
       });
       if (definition.nestedRoutes) {
         activeRoutePaths.push(

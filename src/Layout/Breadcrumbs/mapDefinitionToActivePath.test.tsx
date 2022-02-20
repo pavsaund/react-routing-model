@@ -1,5 +1,12 @@
 import { mapDefinitionToActivePath } from "./mapDefinitionToActivePath";
-import { RoutePathDefinition } from "../../Routing/RoutePathDefinition";
+import { RoutePathDefinition, RoutePathParams } from "../../Routing/RoutePathDefinition";
+
+const compareToIdTitleResolver = (
+  definition: RoutePathDefinition,
+  { compareToId }: RoutePathParams<string>
+) => {
+  return `Params-Details-Tab3/${compareToId}`;
+};
 
 const routes: RoutePathDefinition[] = [
   { title: "Home", path: "/", element: <h1>test</h1> },
@@ -24,16 +31,24 @@ const routes: RoutePathDefinition[] = [
         nestedRoutes: [
           { title: "Params-Details-Tab1", path: "tab1", element: <h1>test</h1> },
           { title: "Params-Details-Tab2", path: "tab2/:compareToId", element: <h1>test</h1> },
+          {
+            title: "Params-Details-Tab3",
+            titleResolver: compareToIdTitleResolver,
+            path: "tab3/:compareToId",
+            element: <h1>test</h1>,
+          },
         ],
       },
     ],
   },
 ];
+
 test("when mapping / route", () => {
   const mappedActivePath = mapDefinitionToActivePath(routes, "/");
 
   expect(mappedActivePath.length).toEqual(1);
   expect(mappedActivePath[0].resolvedPath).toEqual("/");
+  expect(mappedActivePath[0].title).toEqual("Home");
 });
 
 test("when mapping /sub route", () => {
@@ -82,4 +97,14 @@ test("when mapping /params/123/details/tab2/321 route", () => {
   expect(mappedActivePath[0].resolvedPath).toEqual("/params/123");
   expect(mappedActivePath[1].resolvedPath).toEqual("/params/123/details");
   expect(mappedActivePath[2].resolvedPath).toEqual("/params/123/details/tab2/321");
+});
+
+test("when mapping route with custom title resolver", () => {
+  const mappedActivePath = mapDefinitionToActivePath(routes, "/params/123/details/tab3/321");
+
+  expect(mappedActivePath.length).toEqual(3);
+  expect(mappedActivePath[0].resolvedPath).toEqual("/params/123");
+  expect(mappedActivePath[1].resolvedPath).toEqual("/params/123/details");
+  expect(mappedActivePath[2].resolvedPath).toEqual("/params/123/details/tab3/321");
+  expect(mappedActivePath[2].title).toEqual("Params-Details-Tab3/321");
 });
