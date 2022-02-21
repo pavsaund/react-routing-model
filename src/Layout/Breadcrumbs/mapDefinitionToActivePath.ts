@@ -21,7 +21,7 @@ export function mapDefinitionToActivePath(
 
     const isActive = isPathActiveForLocation(toPathname, locationPathname);
 
-    if (isActive) {
+    if (isActive && isMoreSpecificThanPreviousMatches(activeRoutePaths, toPathname)) {
       activeRoutePaths.push({
         resolvedPath: toPathname,
         definition: definition,
@@ -36,3 +36,10 @@ export function mapDefinitionToActivePath(
   });
   return activeRoutePaths;
 }
+function isMoreSpecificThanPreviousMatches(previousMatches: ActiveRoutePath[], toPathname: string): boolean {
+  const previousMatchedPathname = previousMatches[previousMatches.length - 1]
+    ? previousMatches[previousMatches.length - 1].resolvedPath
+    : "";
+  return toPathname.length > previousMatchedPathname.length;
+}
+

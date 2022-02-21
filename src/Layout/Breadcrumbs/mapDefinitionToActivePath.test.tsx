@@ -41,6 +41,11 @@ const routes: RoutePathDefinition[] = [
       },
     ],
   },
+  {
+    title: "Catch All - 404",
+    path: "*",
+    element: <h1>404</h1>,
+  },
 ];
 
 test("when mapping / route", () => {

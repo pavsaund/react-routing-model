@@ -34,7 +34,11 @@ export const routes: RoutePathDefinition[] = [
         title: "Sub2-Param",
         titleResolver: (def, { id }) => `Param-${id}`,
         path: "param/:id",
-        element: <Page title="sub2-param" />,
+        element: <Page title="sub2-param" withOutlet />,
+        nestedRoutes: [
+          { title: "Sub2-Param-Zero", path: "zero", element: <Page title="Sub2-Param-Zero" /> },
+          { title: "Sub2-Param-One", path: "one", element: <Page title="Sub2-Param-One" /> },
+        ],
       },
     ],
   },
@@ -46,5 +50,10 @@ export const routes: RoutePathDefinition[] = [
       { title: "Params with ID-details", path: "details", element: <Page title="params-details" /> },
       { title: "Params with ID-extended", path: "extended", element: <Page title="params-extended" /> },
     ],
+  },
+  {
+    title: "Catch All - 404",
+    path: "*",
+    element: <Page title="404" />,
   },
 ];
