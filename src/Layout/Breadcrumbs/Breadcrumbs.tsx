@@ -1,16 +1,15 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RoutePathDefinition } from '../../Routing/RoutePathDefinition';
-import { mapDefinitionToActivePath } from './mapDefinitionToActivePath';
+import { useActiveRoutePaths } from './useActiveRoutePaths';
+
 
 export interface BreadcrumbsProps {
   routes: RoutePathDefinition[];
 }
 
 export function Breadcrumbs({ routes }: BreadcrumbsProps) {
-  const location = useLocation();
-  const activeRoutePaths = mapDefinitionToActivePath(routes, location.pathname);
-
+  const activeRoutePaths = useActiveRoutePaths(routes);
   return (
     <>
       {activeRoutePaths.map((active, index) => (
