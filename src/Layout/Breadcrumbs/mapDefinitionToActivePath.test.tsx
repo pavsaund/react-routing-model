@@ -42,6 +42,16 @@ const routes: RoutePathDefinition[] = [
     ],
   },
   {
+    title: "With Empty Sub Route",
+    path: "empty",
+    element: <h1>With Empty Sub Route</h1>,
+    nav: true,
+    nestedRoutes: [
+      { title: "Empty Sub route", path: "", element: <h1>empty sub route</h1>},
+      { title: "Sub route", path: "sub", element: <h1>sub route</h1> },
+    ]
+  },
+  {
     title: "Catch All - 404",
     path: "*",
     element: <h1>404</h1>,
@@ -112,4 +122,19 @@ test("when mapping route with custom title resolver", () => {
   expect(mappedActivePath[1].resolvedPath).toEqual("/params/123/details");
   expect(mappedActivePath[2].resolvedPath).toEqual("/params/123/details/tab3/321");
   expect(mappedActivePath[2].title).toEqual("Params-Details-Tab3/321");
+});
+
+test("when mapping route with empty sub route /empty/", () => {
+  const mappedActivePath = mapDefinitionToActivePath(routes, "/empty/");
+
+  expect(mappedActivePath.length).toEqual(1);
+  expect(mappedActivePath[0].resolvedPath).toEqual("/empty");
+});
+
+test("when mapping route with empty sub route /empty/sub", () => {
+  const mappedActivePath = mapDefinitionToActivePath(routes, "/empty/sub");
+
+  expect(mappedActivePath.length).toEqual(2);
+  expect(mappedActivePath[0].resolvedPath).toEqual("/empty");
+  expect(mappedActivePath[1].resolvedPath).toEqual("/empty/sub");
 });

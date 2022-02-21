@@ -18,7 +18,6 @@ export function isPathActiveForLocation(pathName: string, locationPathname: stri
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function matchPatternInPath(pathPattern: string, locationPathname: string): PathMatch<string> | null;
 export function matchPatternInPath(pathPattern: string, locationPathname: string, requireExactMatch: boolean = false): PathMatch<string> | null {
   //use matchPath to resolve params on the path: https://github.com/remix-run/react-router/issues/5870#issuecomment-394194338
   return matchPath(

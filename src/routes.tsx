@@ -43,6 +43,16 @@ export const routes: RoutePathDefinition[] = [
     ],
   },
   {
+    title: "With Sub Route",
+    path: "empty",
+    element: <Page title="Empty Sub Route" />,
+    nav: true,
+    nestedRoutes: [
+      { title: "Empty Sub route", path: "", element: <Page title="EMPTY" />, nav: true },
+      { title: "Sub route", path: "sub", element: <Page title="Sub2-Param-One" />, nav: true },
+    ]
+  },
+  {
     title: "Params with ID",
     path: "/params/:id",
     element: <Page title="params" withOutlet />,
