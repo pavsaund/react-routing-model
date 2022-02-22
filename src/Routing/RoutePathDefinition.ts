@@ -1,15 +1,9 @@
-import { Params } from "react-router-dom";
+import { PathMatch, RouteObject } from "react-router-dom";
 
-export type RoutePathParams<ParamsOrKey extends string | Record<string, string | undefined>> = Readonly<[ParamsOrKey] extends [string] ? Params<ParamsOrKey> : Partial<ParamsOrKey>>;
-
-export type RoutePathDefinition<ParamsOrKey extends string | Record<string, string | undefined> = string> = {
+export type RoutePathDefinition = RouteObject & {
   title: string;
-  titleResolver?: (
-    definition: RoutePathDefinition,
-    params: RoutePathParams<ParamsOrKey>
-  ) => string;
-  path: string;
-  element: JSX.Element;
-  nestedRoutes?: RoutePathDefinition[];
+  titleResolver?: (definition: RoutePathDefinition, match: PathMatch<string>) => string;
   nav?: boolean;
+  children?: RoutePathDefinition[];
+  path: string;
 };

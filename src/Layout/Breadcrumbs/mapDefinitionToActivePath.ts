@@ -26,12 +26,8 @@ export function mapDefinitionToActivePath(
         title: definition.titleResolver?.(definition, match) || definition.title,
         match: match
       });
-      if (definition.nestedRoutes) {
-        const nestedMatches = mapDefinitionToActivePath(
-          definition.nestedRoutes,
-          locationPathname,
-          pathPatternWithParent
-        );
+      if (definition.children) {
+        const nestedMatches = mapDefinitionToActivePath(definition.children, locationPathname, pathPatternWithParent);
         nestedMatches.forEach((activePath) => {
           if (canBeAddedToActiveRoutes(activeRoutePaths, activePath.match)) {
             activeRoutePaths.push(activePath);
