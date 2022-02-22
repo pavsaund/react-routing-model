@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { RoutePathDefinition } from "../../Routing/RoutePathDefinition";
+import { RoutePathDefinition } from "./RoutePathDefinition";
 import { ActiveRoutePath } from "./ActiveRoutePath";
 import { mapDefinitionToActivePath } from "./mapDefinitionToActivePath";
 

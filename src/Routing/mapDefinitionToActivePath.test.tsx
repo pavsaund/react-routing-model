@@ -1,12 +1,9 @@
 import { mapDefinitionToActivePath } from "./mapDefinitionToActivePath";
-import { RoutePathDefinition } from "../../Routing/RoutePathDefinition";
-import { PathMatch } from 'react-router-dom';
+import {  RoutePathDefinition } from "./RoutePathDefinition";
+import { ActiveRoutePathTitleCallbackParams } from './ActiveRoutePathTitleCallback';
 
-const compareToIdTitleResolver = (
-  definition: RoutePathDefinition,
-  { params }: PathMatch<string>
-) => {
-  return `Params-Details-Tab3/${params.compareToId}`;
+const compareToIdTitleResolver = ({ match }: ActiveRoutePathTitleCallbackParams<"compareToId">) => {
+  return `Params-Details-Tab3/${match.params.compareToId}`;
 };
 
 const routes: RoutePathDefinition[] = [
@@ -33,8 +30,7 @@ const routes: RoutePathDefinition[] = [
           { title: "Params-Details-Tab1", path: "tab1", element: <h1>test</h1> },
           { title: "Params-Details-Tab2", path: "tab2/:compareToId", element: <h1>test</h1> },
           {
-            title: "Params-Details-Tab3",
-            titleResolver: compareToIdTitleResolver,
+            title: compareToIdTitleResolver,
             path: "tab3/:compareToId",
             element: <h1>test</h1>,
           },

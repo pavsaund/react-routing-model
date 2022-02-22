@@ -1,7 +1,7 @@
-import { PathMatch } from 'react-router-dom';
+import { Location, PathMatch } from "react-router-dom";
 import { ActiveRoutePath } from "./ActiveRoutePath";
-import { matchPatternInPath, isPathActiveForLocation, concatPaths } from "../../Routing/routeHelpers";
-import { RoutePathDefinition } from "../../Routing/RoutePathDefinition";
+import { matchPatternInPath, isPathActiveForLocation, concatPaths } from "./routeHelpers";
+import { RoutePathDefinition } from "./RoutePathDefinition";
 
 export function mapDefinitionToActivePath(
   definitions: RoutePathDefinition[],
@@ -11,32 +11,38 @@ export function mapDefinitionToActivePath(
   const activeRoutePaths: ActiveRoutePath[] = [];
 
   definitions.forEach((definition, index) => {
-    const pathPatternWithParent = concatPaths(parentPath, definition.path || "");
+    const pathPatternWithParent = concatPaths(parentPath, definition.path);
     const match = matchPatternInPath(pathPatternWithParent, locationPathname);
     if (!match) {
       return;
     }
 
-    if (
-      isResolvedAsActive(match.pathname, locationPathname, definition) &&
-      canBeAddedToActiveRoutes(activeRoutePaths, match)
-    ) {
-      activeRoutePaths.push({
+    if (isResolvedAsActive(match.pathname, locationPathname, definition)) {
+      const activeRoutePath: ActiveRoutePath = {
         definition: definition,
-        title: definition.titleResolver?.(definition, match) || definition.title,
-        match: match
-      });
+        title:
+          typeof definition.title === "function"
+            ? definition.title({ definition, match, locationPathname: locationPathname })
+            : definition.title,
+        match: match,
+      };
+      addActiveRoutePathIfPossible(activeRoutePaths, activeRoutePath);
+
       if (definition.children) {
         const nestedMatches = mapDefinitionToActivePath(definition.children, locationPathname, pathPatternWithParent);
         nestedMatches.forEach((activePath) => {
-          if (canBeAddedToActiveRoutes(activeRoutePaths, activePath.match)) {
-            activeRoutePaths.push(activePath);
-          }
+          addActiveRoutePathIfPossible(activeRoutePaths, activePath);
         });
       }
     }
   });
   return activeRoutePaths;
+}
+
+function addActiveRoutePathIfPossible(activeRoutePaths: ActiveRoutePath[], activePath: ActiveRoutePath) {
+  if (canBeAddedToActiveRoutes(activeRoutePaths, activePath.match)) {
+    activeRoutePaths.push(activePath);
+  }
 }
 
 function isResolvedAsActive(toPathname: string, locationPathname: string, definition: RoutePathDefinition) {

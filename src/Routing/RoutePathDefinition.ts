@@ -1,8 +1,9 @@
-import { PathMatch, RouteObject } from "react-router-dom";
+import { RouteObject } from "react-router-dom";
+import { ActiveRoutePathTitleCallback } from './ActiveRoutePathTitleCallback';
+
 
 export type RoutePathDefinition = RouteObject & {
-  title: string;
-  titleResolver?: (definition: RoutePathDefinition, match: PathMatch<string>) => string;
+  title: string | ActiveRoutePathTitleCallback;
   nav?: boolean;
   children?: RoutePathDefinition[];
   path: string;

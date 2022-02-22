@@ -1,5 +1,4 @@
 import { RouteObject, useRoutes } from "react-router-dom";
-import { RoutePathDefinition } from "./RoutePathDefinition";
 
 export interface RoutesRendererProps {
   routes: RouteObject[];

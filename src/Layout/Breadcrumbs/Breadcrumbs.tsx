@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { RoutePathDefinition } from '../../Routing/RoutePathDefinition';
-import { useActiveRoutePaths } from './useActiveRoutePaths';
+import { useActiveRoutePaths } from '../../Routing/useActiveRoutePaths';
 
 
 export interface BreadcrumbsProps {
