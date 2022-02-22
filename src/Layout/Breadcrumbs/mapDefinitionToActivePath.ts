@@ -1,3 +1,4 @@
+import { PathMatch } from 'react-router-dom';
 import { ActiveRoutePath } from "./ActiveRoutePath";
 import { matchPatternInPath, isPathActiveForLocation, concatPaths } from "../../Routing/routeHelpers";
 import { RoutePathDefinition } from "../../Routing/RoutePathDefinition";
@@ -10,23 +11,20 @@ export function mapDefinitionToActivePath(
   const activeRoutePaths: ActiveRoutePath[] = [];
 
   definitions.forEach((definition, index) => {
-    const pathPatternWithParent = concatPaths(parentPath, definition.path);
-
-    const matchedPath = matchPatternInPath(pathPatternWithParent, locationPathname);
-    if (!matchedPath) {
+    const pathPatternWithParent = concatPaths(parentPath, definition.path || "");
+    const match = matchPatternInPath(pathPatternWithParent, locationPathname);
+    if (!match) {
       return;
     }
 
-    const toPathname = matchedPath.pathname;
-
     if (
-      isResolvedAsActive(toPathname, locationPathname, definition) &&
-      canBeAddedToActiveRoutes(activeRoutePaths, toPathname)
+      isResolvedAsActive(match.pathname, locationPathname, definition) &&
+      canBeAddedToActiveRoutes(activeRoutePaths, match)
     ) {
       activeRoutePaths.push({
-        resolvedPath: toPathname,
         definition: definition,
-        title: definition.titleResolver?.(definition, matchedPath?.params || {}) || definition.title,
+        title: definition.titleResolver?.(definition, match) || definition.title,
+        match: match
       });
       if (definition.nestedRoutes) {
         const nestedMatches = mapDefinitionToActivePath(
@@ -35,7 +33,7 @@ export function mapDefinitionToActivePath(
           pathPatternWithParent
         );
         nestedMatches.forEach((activePath) => {
-          if (canBeAddedToActiveRoutes(activeRoutePaths, activePath.resolvedPath)) {
+          if (canBeAddedToActiveRoutes(activeRoutePaths, activePath.match)) {
             activeRoutePaths.push(activePath);
           }
         });
@@ -45,14 +43,14 @@ export function mapDefinitionToActivePath(
   return activeRoutePaths;
 }
 
-function isResolvedAsActive(toPathname: string, locationPathname: string, definition: RoutePathDefinition<string>) {
-  return isPathActiveForLocation(toPathname, locationPathname) && isNotCatchAll(definition.path);
+function isResolvedAsActive(toPathname: string, locationPathname: string, definition: RoutePathDefinition) {
+  return isPathActiveForLocation(toPathname, locationPathname) && isNotCatchAll(definition.path || "");
 }
 
-function canBeAddedToActiveRoutes(activeRoutePaths: ActiveRoutePath[], toPathname: string) {
+function canBeAddedToActiveRoutes(activeRoutePaths: ActiveRoutePath[], match: PathMatch<string>) {
   return (
-    isNotSameAsPreviousMatch(activeRoutePaths, toPathname) &&
-    isMoreSpecificThanPreviousMatch(activeRoutePaths, toPathname)
+    isNotSameAsPreviousMatch(activeRoutePaths, match) &&
+    isMoreSpecificThanPreviousMatch(activeRoutePaths, match.pathname)
   );
 }
 
@@ -60,13 +58,13 @@ function getPreviousMatch(previousMatches: ActiveRoutePath[]): ActiveRoutePath |
   return previousMatches[previousMatches.length - 1];
 }
 
-function isNotSameAsPreviousMatch(previousMatches: ActiveRoutePath[], toPathname: string): boolean {
-  const previousMatchedPathname = getPreviousMatch(previousMatches)?.resolvedPath ?? "";
-  return previousMatchedPathname !== toPathname;
+function isNotSameAsPreviousMatch(previousMatches: ActiveRoutePath[], match: PathMatch<string>): boolean {
+  const previousMatchedPathname = getPreviousMatch(previousMatches)?.match.pattern ?? "";
+  return previousMatchedPathname !== match.pattern;
 }
 
 function isMoreSpecificThanPreviousMatch(previousMatches: ActiveRoutePath[], toPathname: string): boolean {
-  const previousMatchedPathname = getPreviousMatch(previousMatches)?.resolvedPath ?? "";
+  const previousMatchedPathname = getPreviousMatch(previousMatches)?.match.pathname ?? "";
   return toPathname.length > previousMatchedPathname.length;
 }
 
