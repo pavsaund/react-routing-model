@@ -12,10 +12,14 @@ export function Breadcrumbs({ routes }: BreadcrumbsProps) {
   const activeRoutePaths = useActiveRoutePaths(routes);
   return (
     <>
-      {activeRoutePaths.map((active, index) => (
+      {activeRoutePaths.map((active, index, { length }) => (
         <span key={index}>
           {index === 0 ? "" : " > "}
-          <Link to={active.match.pathname}>{active.title}</Link>
+          {index !== length - 1 ? (
+            <Link to={active.match.pathname}>{active.title}</Link>
+          ) : (
+            <>{active.title}</>
+          )}
         </span>
       ))}
     </>

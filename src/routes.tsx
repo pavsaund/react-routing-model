@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Page } from "./Layout/Page";
 import { ActiveRoutePathTitleCallbackParams } from './Routing/ActiveRoutePathTitleCallback';
 import { RoutePathDefinition } from "./Routing/RoutePathDefinition";
@@ -26,7 +27,7 @@ export const routes: RoutePathDefinition[] = [
   {
     title: "Sub2",
     path: "/sub2",
-    element: <Page title="sub2" withOutlet />,
+    element: <Page title="sub2" withOutlet ><Link to='/sub2/param/12345667/one'>To parameterized route</Link></Page>,
     nav: true,
     children: [
       { title: "Sub2-Zero", path: "zero", element: <Page title="sub2-zero" /> },
